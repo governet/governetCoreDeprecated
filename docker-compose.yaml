@@ -5,7 +5,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_PASSWORD=example
+      - POSTGRES_PASSWORD=${PGPASSWORD}
     networks:
       - governetwork
   loader:
@@ -13,7 +13,7 @@ services:
     ports:
       - 5000:5000
     environment:
-      - POSTGRES_PASSWORD=example
+      - POSTGRES_PASSWORD=${PGPASSWORD}
     networks:
       - governetwork
     depends_on:

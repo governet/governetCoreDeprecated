@@ -1,0 +1,28 @@
+{
+  "name": "governetbackend",
+  "version": "0.0.2",
+  "description": "The backend for governet FEC data explorer",
+  "main": "serve.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/governet/governetCore/tree/master/backend"
+  },
+  "keywords": [
+    "governet",
+    "politics",
+    "node",
+    "fec",
+    "campaign",
+    "finance"
+  ],
+  "author": "Dan Budris",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^5.12.0",
+    "express": "^4.16.4",
+    "pg": "^7.7.1"
+  }
+}

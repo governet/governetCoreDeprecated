@@ -1,12 +1,18 @@
 FROM node:8.15.0-stretch
 
-WORKDIR /srv
+WORKDIR /usr/src/governet
 
-COPY serve.js .
 COPY package.json .
 COPY package-lock.json .
-
 RUN npm install
+
+COPY serve.js .
+
+ENV PGUSER=postgres
+ENV PGHOST=postgres
+ENV PGPASSWORD=example
+ENV PGDATABASE=governet
+ENV PGPORT=5432 
 
 EXPOSE 8080
 
