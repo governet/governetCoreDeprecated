@@ -87,10 +87,12 @@ class dataFetcher:
 
     def fetchData(self):
         ''' Fetch all of the files in all of the years
+            FEC cycles go by the even year -- so if it's not an even year, don't get it!
         '''
         for year in self.years:
-            self._fetchFilesInYear(year)
-        self._fetchHeaderFiles()
+            if int(year) % 2 == 0:
+                self._fetchFilesInYear(year)
+            self._fetchHeaderFiles()
 
 # future functions for cleaning the data and laoding it into the database
 def unzipData(path, dest):

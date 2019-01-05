@@ -1,5 +1,20 @@
 version: '3'
 services:
+  backend:
+    build: ./backend/.
+    ports:
+      - 8080:8080
+    environment:
+      - PGUSER=${PGUSER}
+      - PGHOST=${PGHOST}
+      - PGPASSWORD=${PGPASSWORD}
+      - PGDATABASE=${PGDATABASE}
+      - PGPORT=${PGPORT}
+    networks:
+      - governetwork
+    depends_on:
+      - "postgres"
+      - "loader"
   postgres:
     build: ./database/.
     ports:
