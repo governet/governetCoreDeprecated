@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<head>
+    <title>Governet Loader</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: left;
+            border-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div>
+            <h1><a href="https://github.com/governet">Governet Loader</a></h1>
+            <p>Fetch data from the <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">FEC bulk data server</a>, and load it into the <a href="">Governnet database</a></p>
+            <p></a href="https://github.com/governet">A part of GovernNet</a></p>
+        </div>
+        <div>
+            <h2>Last data pull: {{ timeStamp }}</h2>
+        </div>
+        <div>
+            <h2>Configuration</h2>
+            <table>
+                <tr>
+                    <th>Config File</th>
+                    <th>{{ configPath }}</th>
+                </tr>
+                <tr>
+                    <th> Config Profile</th>
+                    <th> {{ profile }}</th>
+                </tr>
+                <tr>
+                    <th>Data Year Range</th>
+                    <th>{{ dataYears }}</th>
+                </tr>
+                <tr>
+                    <th>Remote URL</th>
+                    <th>{{ url }}</th>
+                </tr>
+                <tr>
+                    <th>Data Path</th>
+                    <th>{{ outPath }}</th>
+                </tr>
+                <tr>
+                    <th>Logging Level </th>
+                    <th>{{ logLevel }}</th>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <h2>Data Directories</h2>
+            {{ dataDirs }}
+        </div>
+    </div>
+</body>
