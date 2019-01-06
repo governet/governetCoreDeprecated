@@ -6,14 +6,10 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm install
 
-COPY serve.js .
+COPY routes.js .
+COPY queries.js .
+COPY app.js .
 
-ENV PGUSER=postgres
-ENV PGHOST=postgres
-ENV PGPASSWORD=example
-ENV PGDATABASE=governet
-ENV PGPORT=5432 
+EXPOSE 3000
 
-EXPOSE 8080
-
-CMD ["node", "serve.js"]
+CMD ["node", "app.js"]
