@@ -1,7 +1,8 @@
-# Governet
+# Governet Core
 ## Version 0.2
-GovernNet provides an interface to FEC election data.
-GovernNet acts as a facade over the FEC bulk data, allowing for local maniuplation and management of the data.
+Governet provides an interface to FEC election data.
+Governet acts as a facade over the FEC bulk data, allowing for local maniuplation and management of the data.
+This repository contains the core governet services, including the database, api, batch processor, and soon the UI and cache.
 
 ## Getting Started with Development
 ### Dependencies: 
