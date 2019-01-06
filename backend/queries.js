@@ -3,8 +3,11 @@ var options = {};
 
 //import pg promise, and connect to the db
 var pgp = require('pg-promise')(options);
+
+
+
 //this db connection string should use an environment variable rather than being hard coded
-var connectionString = 'postgres://postgres:example@database:5432/governet';
+var connectionString = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
 var db = pgp(connectionString);
 
 //Get all candidates
