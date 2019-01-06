@@ -35,7 +35,7 @@ Node.js + Express API
 
 Exposes port 3000
 
-See /api/routes.js for the available routes
+See the file `/api/routes.js` in this directory for the available routes
 
 ### Loader
 Python batch processer
