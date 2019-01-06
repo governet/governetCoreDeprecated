@@ -19,22 +19,29 @@ This will stand up the database, the loader, fetch the data from the FEC and loa
 3. check out the data
 
 127.0.0.1:5000 
+
 127.0.0.1:3000/candidates
 
 ## The Governet Services
 ### Database
 Postgres database
+
 Exposes port 5324
+
 Base database is `governet`.
 
 ### API
 Node.js + Express API
+
 Exposes port 3000
+
 See /api/routes.js for the available routes
 
 ### Loader
 Python batch processer
+
 Exposes port 5000, for a simple config/health check
+
 At startup reads the configuration file from the loader directory, and fetchs + loads the requested years and data sets from the FEC bulk data server. 
 
 #### Author
