@@ -18,9 +18,9 @@ Install [Docker & Docker Compose](https://docs.docker.com/install/).  Docker Com
 
 3. check out the data
 
-   127.0.0.1:5000 
+   `127.0.0.1:5000`
 
-   127.0.0.1:3000/candidates
+   `127.0.0.1:3000/candidates`
 
 ## The Governet Services
 ### Database
