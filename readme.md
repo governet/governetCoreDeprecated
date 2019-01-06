@@ -7,7 +7,7 @@ GovernNet acts as a facade over the FEC bulk data, allowing for local maniuplati
 Dependencies: 
 Install [Docker & Docker Compose](https://docs.docker.com/install/).  Docker Community Edition for Mac and Windows comes pre-packaged with Docker Compose. 
 
-Setup:
+### Setup:
 1. Copy the file `.env.example`, renaming it to `.env`.
 
 The application relies on environment variables to understand how to connect to the database. Docker Compose looks for those environment variables stored in a `.env` file in the root of the project.  As this file can contain sensitive information it's gitignored.  However, we've included a working example.  Simply rename the `.env.example` file in the root to `.env` and docker compose will pick it up
