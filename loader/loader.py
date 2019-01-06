@@ -9,6 +9,10 @@ import logging
 import csv
 import psycopg2
 
+def connectToDatabase(database, user, password, host):
+    conn = psycopg2.connect(f"dbname={database} user={user} password={password} host={host}")
+    return conn
+
 class dataFetcher:
     def __init__(self, config, profile="DEFAULT"):
         self.config = config[profile]
@@ -21,11 +25,11 @@ class dataFetcher:
         # the FEC data file types to fetch
         self._dataTypes = [\
             {"type":"cn","format":".zip","description":""},\
-            #{"type":"cm","format":".zip","description":""},\
+            {"type":"cm","format":".zip","description":""},\
             #{"type":"oppexp","format":".zip","description":""},\
             #{"type":"oth","format":".zip","description":""},\
             #{"type":"indiv","format":".zip","description":""},\
-            #{"type":"pas2","format":".zip","description":""}
+            {"type":"pas2","format":".zip","description":""}
         ]
 
     def _constructFilePath(self, type, format, url, year):
@@ -94,6 +98,89 @@ class dataFetcher:
                 self._fetchFilesInYear(year)
             self._fetchHeaderFiles()
 
+    def loadData(self):
+        ''' Create tables and load data into the database
+        '''
+        database = "governet"
+        user     = "postgres"
+        password = os.environ['POSTGRES_PASSWORD']
+        host     = "database"
+
+        try:
+            conn = connectToDatabase(database, user, password, host)
+        except:
+            logging.error(f"Unable to connect to the database {database} on host {host} as user {user}")
+
+        for year in self.years:
+                if int(year) %2 == 0:
+                    cur = conn.cursor()
+                    f = open(f'/srv/data/{year}/cn.txt')
+                    cur.copy_from(f, 'candidates', sep="|", columns=(
+                        'CAND_ID', 
+                        'CAND_NAME',
+                        'CAND_PTY_AFFILIATION',
+                        'CAND_ELECTION_YR',
+                        'CAND_OFFICE_ST',
+                        'CAND_OFFICE',
+                        'CAND_OFFICE_DISTRICT',
+                        'CAND_ICI',
+                        'CAND_STATUS',
+                        'CAND_PCC',
+                        'CAND_ST1',
+                        'CAND_ST2',
+                        'CAND_CITY',
+                        'CAND_ST',
+                        'CAND_ZIP'
+                        ))
+
+                    f = open(f'/srv/data/{year}/itpas2.txt')
+                    cur.copy_from(f, 'cmte_contributions', sep='|', columns=(
+                        'CMTE_ID',
+                        'AMNDT_IND',
+                        'RPT_TP',
+                        'TRANSACTION_PGI',
+                        'IMAGE_NUM',
+                        'TRANSACTION_TP',
+                        'ENTITY_TP',
+                        'NAME',
+                        'CITY',
+                        'STATE',
+                        'ZIP_CODE',
+                        'EMPLOYER',
+                        'OCCUPATION',
+                        'TRANSACTION_DT',
+                        'TRANSACTION_AMT',
+                        'OTHER_ID',
+                        'CAND_ID',
+                        'TRAN_ID',
+                        'FILE_NUM',
+                        'MEMO_CD',
+                        'MEMO_TEXT',
+                        'SUB_ID'
+                    ))
+
+                    f = open(f'/srv/data/{year}/cm.txt')
+                    cur.copy_from(f, 'committees', sep='|', columns=(
+                        'CMTE_ID', 
+                        'CMTE_NM', 
+                        'TRES_NM', 
+                        'CMTE_ST1', 
+                        'CMTE_ST2', 
+                        'CMTE_CITY', 
+                        'CMTE_ST', 
+                        'CMTE_ZIP', 
+                        'CMTE_DSGN', 
+                        'CMTE_TP', 
+                        'CMTE_PTY_AFFILIATION', 
+                        'CMTE_FILING_FREQ', 
+                        'ORG_TP', 
+                        'CONNECTED_ORG_NM', 
+                        'CAND_ID'
+                    ))
+
+        conn.commit()
+        conn.close()
+
 # future functions for cleaning the data and laoding it into the database
 def unzipData(path, dest):
     logging.info(f"Unzipping file at {path} to {dest}...")
@@ -126,39 +213,6 @@ def addHeaders(filePrefix, dataDirectory):
             writer.writeheader()
     return
 
-def connectToDatabase(database, user, password, host):
-    conn = psycopg2.connect(f"dbname={database} user={user} password={password} host={host}")
-    return conn
 
-def loadData():
-    ''' Create tables and load data into the database
-    '''
-    database = "governet"
-    user     = "postgres"
-    password = os.environ['POSTGRES_PASSWORD']
-    host     = "postgres"
-    try:
-        conn = connectToDatabase(database, user, password, host)
-    except:
-        logging.error(f"Unable to connect to the database {database} on host {host} as user {user}")
-    cur = conn.cursor()
-    f = open('/srv/data/2018/cn.txt')
-    cur.copy_from(f, 'candidates', sep="|", columns=(
-        'CAND_ID', 
-        'CAND_NAME',
-        'CAND_PTY_AFFILIATION',
-        'CAND_ELECTION_YR',
-        'CAND_OFFICE_ST',
-        'CAND_OFFICE',
-        'CAND_OFFICE_DISTRICT',
-        'CAND_ICI',
-        'CAND_STATUS',
-        'CAND_PCC',
-        'CAND_ST1',
-        'CAND_ST2',
-        'CAND_CITY',
-        'CAND_ST',
-        'CAND_ZIP'
-        ))
-    conn.commit()
-    conn.close()
+    
+

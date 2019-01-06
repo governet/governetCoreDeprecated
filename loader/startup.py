@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     # Load all of the downloaded, unzipped data into the database
     logging.info("Starting data load to...")
-    loader.loadData()
+    dataFetcher.loadData()
 
     logging.info("Starting API...")
     api.runApp(configPath, configProfile, loadedConfig, dataLoadTimestamp)

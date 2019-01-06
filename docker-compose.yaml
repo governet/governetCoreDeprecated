@@ -13,9 +13,9 @@ services:
     networks:
       - governetwork
     depends_on:
-      - "postgres"
+      - "database"
       - "loader"
-  postgres:
+  database:
     build: ./database/.
     ports:
       - 5432:5432
@@ -32,7 +32,7 @@ services:
     networks:
       - governetwork
     depends_on:
-      - "postgres"
+      - "database"
 networks:
   governetwork:
     driver: bridge
