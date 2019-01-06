@@ -4,7 +4,7 @@ GovernNet provides an interface to FEC election data.
 GovernNet acts as a facade over the FEC bulk data, allowing for local maniuplation and management of the data.
 
 ## Getting Started with Development
-Dependencies: 
+### Dependencies: 
 Install [Docker & Docker Compose](https://docs.docker.com/install/).  Docker Community Edition for Mac and Windows comes pre-packaged with Docker Compose. 
 
 ### Setup:
