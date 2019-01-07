@@ -21,7 +21,7 @@ Install [Docker & Docker Compose](https://docs.docker.com/install/).  Docker Com
 
    `127.0.0.1:5000`
 
-   `127.0.0.1:3000/candidates`
+   `127.0.0.1:3000/api/candidates`
 
 ## The Governet Services
 ### Database
@@ -36,7 +36,7 @@ Node.js + Express API
 
 Exposes port 3000
 
-See the file `/api/routes.js` in this directory for the available routes
+See the file `/backend/routes.js` in this directory for the available routes
 
 ### Loader
 Python batch processer
