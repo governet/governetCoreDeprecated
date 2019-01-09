@@ -130,7 +130,6 @@ function getContributionsByCandidate(req, res, next) {
           return next(err);
         });
     }
-    
 
 //Export the queries
 module.exports = {

@@ -1,5 +1,16 @@
 version: '3'
 services:
+  graphql:
+    build: ./graphql/.
+    ports: 
+      - 5000:5000
+    environment:
+      - PGUSER=${CONNSTR}
+    networks:
+      - governetwork
+    depends_on:
+      - "database"
+      - "loader"
   backend:
     build: ./backend/.
     ports:
@@ -26,7 +37,7 @@ services:
   loader:
     build: ./loader/.
     ports:
-      - 5000:5000
+      - 3001:5000
     environment:
       - POSTGRES_PASSWORD=${PGPASSWORD}
     networks:
