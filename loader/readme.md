@@ -12,3 +12,11 @@ A class and set of functions for downloading data from the FEC bulk data server,
 
 ## API
 A very simple flask API which shows the configuration values the loads is currently using.
+
+
+# THE FUTURE
+this should be set up to run as a kubernetes cron job, loading the data into a PostGres image, and then the postgres
+image is snapshotted and push to a container repository.  That way we can run this just once a day as a k8s job or the like,
+load the data up, and have it ready to acces in a more consistent and simpler manner
+
+we also need some kind of readiness check for the other pods to ensure they won't start up until we've loaded the data 

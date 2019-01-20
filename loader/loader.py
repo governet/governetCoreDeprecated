@@ -7,6 +7,7 @@ import zipfile
 import datetime
 import logging
 import csv
+import json
 import psycopg2
 
 def connectToDatabase(database, user, password, host):
@@ -23,14 +24,14 @@ class dataFetcher:
         # the range of years this data set is concerned with
         self.years = [str(year) for year in range(self.startYear, self.endYear+1)]
         # the FEC data file types to fetch
-        self._dataTypes = [\
-            {"type":"cn","format":".zip","description":""},\
-            {"type":"cm","format":".zip","description":""},\
-            #{"type":"oppexp","format":".zip","description":""},\
-            #{"type":"oth","format":".zip","description":""},\
-            #{"type":"indiv","format":".zip","description":""},\
-            {"type":"pas2","format":".zip","description":""}
-        ]
+        self._dataTypes = (
+            list(
+                map(
+                    lambda x: {"type":x,"format":".zip","description":""},
+                    json.loads(self.config["dataTypes"])
+                )
+            )
+        )
 
     def _constructFilePath(self, type, format, url, year):
         ''' Generate the URL path of the given file
@@ -69,7 +70,10 @@ class dataFetcher:
         '''
         logging.info(f"Fetching files from {url}, saving to {outPath}...")
         directory = (outPath.split(outPath.split("/")[-1], 1)[0])
-        subprocess.call(["mkdir", directory])
+        try:
+            subprocess.call(["mkdir", directory])
+        except:
+            logging.warn('Directory already exists')
         fetchData = subprocess.Popen(["wget", url, "-O", outPath], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         for line in fetchData.stdout:
             logging.info(line)
@@ -98,6 +102,17 @@ class dataFetcher:
                 self._fetchFilesInYear(year)
             self._fetchHeaderFiles()
 
+    def _cleanData(self, file):
+        input_file = open(file)
+        sanitized_input = input_file.read().replace("\\","/")
+        input_file.close
+
+        cleaned_file = open(file, 'w')
+        cleaned_file.write(sanitized_input)
+        cleaned_file.close
+
+        return(f"Cleaned {file}")
+
     def loadData(self):
         ''' Create tables and load data into the database
         '''
@@ -114,7 +129,10 @@ class dataFetcher:
         for year in self.years:
                 if int(year) %2 == 0:
                     cur = conn.cursor()
+
+                    self._cleanData(f'/srv/data/{year}/cn.txt')
                     f = open(f'/srv/data/{year}/cn.txt')
+
                     cur.copy_from(f, 'candidates', sep="|", columns=(
                         'CAND_ID', 
                         'CAND_NAME',
@@ -133,6 +151,8 @@ class dataFetcher:
                         'CAND_ZIP'
                         ))
 
+                    
+                    self._cleanData(f'/srv/data/{year}/itpas2.txt')
                     f = open(f'/srv/data/{year}/itpas2.txt')
                     cur.copy_from(f, 'cmte_contributions', sep='|', columns=(
                         'CMTE_ID',
@@ -159,7 +179,9 @@ class dataFetcher:
                         'SUB_ID'
                     ))
 
+                    self._cleanData(f'/srv/data/{year}/cm.txt')
                     f = open(f'/srv/data/{year}/cm.txt')
+
                     cur.copy_from(f, 'committees', sep='|', columns=(
                         'CMTE_ID', 
                         'CMTE_NM', 
