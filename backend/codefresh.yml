@@ -3,16 +3,13 @@ steps:
   BuildingDockerImage:
     title: Building Docker Image
     type: build
-    image_name: gcr.io/danb-k8s/governetcore_backend
-    working_directory: ./backend/
+    image_name: 'governetcore'
+    working_directory: ./backend
     tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
     dockerfile: Dockerfile
-  PushDockerImage:
+  PushingToDockerRegistry:
+    title: Pushing to Docker Registry
     type: push
-    title: Pushing the Docker Image to GCR
-    description: Push the built docker image to GCR
-    candidate: gcr.io/danb-k8s/governetcore_backend
-    tag: latest
-    image_name: gcr.io/danb-k8s/governetcore_backend
-    registry: my-registry
-    fail_fast: false
+    candidate: '${{BuildingDockerImage}}'
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
+    registry: gcr
