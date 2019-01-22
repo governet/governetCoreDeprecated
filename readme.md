@@ -30,6 +30,8 @@ Install [Docker & Docker Compose](https://docs.docker.com/install/).  Docker Com
 React frontend for the system
 
 ## Database
+[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/danbudris/governet%2FgovernetCore%2FgovernetCoreDatabase?type=cf-1)]( https://g.codefresh.io/public/accounts/danbudris/pipelines/governet/governetCore/governetCoreDatabase)
+
 Postgres database
 
 Exposes port 5324
