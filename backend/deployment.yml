@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: governetcore-backend
-        image: <not-set>
+        image: gcr.io/governet/governetcore_backend
         ports:
         - containerPort: 5000
