@@ -29,14 +29,14 @@ Install [Docker & Docker Compose](https://docs.docker.com/install/).  Docker Com
 
 React frontend for the system
 
-### Database
+## Database
 Postgres database
 
 Exposes port 5324
 
 Base database is `governet`.
 
-### API
+## API
 [![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/danbudris/governet%2FgovernetCore%2FgovernetCoreBackend?type=cf-1)]( https://g.codefresh.io/public/accounts/danbudris/pipelines/governet/governetCore/governetCoreBackend)
 
 Node.js + Express API
@@ -45,7 +45,7 @@ Exposes port 3000
 
 See the file `/backend/routes.js` in this directory for the available routes
 
-### Loader
+## Loader
 Python batch processer
 
 Exposes port 5000, for a simple config/health check
