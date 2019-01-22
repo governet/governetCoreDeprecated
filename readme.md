@@ -48,6 +48,8 @@ Exposes port 3000
 See the file `/backend/routes.js` in this directory for the available routes
 
 ## Loader
+[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/danbudris/governet%2FgovernetCore%2FgovernetCoreLoader?type=cf-1)]( https://g.codefresh.io/public/accounts/danbudris/pipelines/governet/governetCore/governetCoreLoader)
+
 Python batch processer
 
 Exposes port 5000, for a simple config/health check
