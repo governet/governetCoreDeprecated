@@ -24,6 +24,11 @@ Install [Docker & Docker Compose](https://docs.docker.com/install/).  Docker Com
    `127.0.0.1:3000/api/candidates`
 
 ## The Governet Services
+## Frontend
+[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/danbudris/governet%2FgovernetCore%2FgovernetCoreFrontend?type=cf-1)]( https://g.codefresh.io/public/accounts/danbudris/pipelines/governet/governetCore/governetCoreFrontend)
+
+React frontend for the system
+
 ### Database
 Postgres database
 
