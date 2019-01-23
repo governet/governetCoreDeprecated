@@ -1,15 +1,15 @@
 version: '3'
 services:
-  frontend:
-    build: ./frontend/.
-    ports:
-      - 5001:80
-    environment:
-        - NODE-ENV=production
-    networks:
-      - governetwork
-    depends_on:
-      - "backend"
+  #frontend:
+  #  build: ./frontend/.
+  #  ports:
+  #    - 5001:80
+  #  environment:
+  #      - NODE-ENV=production
+  #  networks:
+  #    - governetwork
+  #  depends_on:
+  #    - "backend"
   graphql:
     build: ./graphql/.
     ports: 
