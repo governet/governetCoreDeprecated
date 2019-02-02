@@ -18,7 +18,6 @@ class CandidateDashboard extends Component {
         return (
           <div className="Dashboard">
               <CandidateProfile candidate_id={this.state.candidate_id}/>
-              <ContributionSummary candidate_id={this.state.candidate_id}/>
               <ContributionList candidate_id={this.state.candidate_id}/>
           </div>
         );
@@ -26,3 +25,5 @@ class CandidateDashboard extends Component {
     }
 
 export default CandidateDashboard;
+
+//<ContributionSummary candidate_id={this.state.candidate_id}/>
