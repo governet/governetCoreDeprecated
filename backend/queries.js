@@ -1,12 +1,12 @@
 //pg-promise options; required
-var options = {};
+let options = {};
 
 //import pg promise, and connect to the db
-var pgp = require('pg-promise')(options);
+const pgp = require('pg-promise')(options);
 
 //this db connection string should use an environment variable rather than being hard coded
-var connectionString = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
-var db = pgp(connectionString);
+const connectionString = `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
+const db = pgp(connectionString);
 
 //Get all candidates
 function getAllCandidates(req, res, next) {
@@ -129,6 +129,42 @@ function getContributionsByCandidate(req, res, next) {
         });
     }
 
+    function getContributionsByCandidateList(req, res, next) {
+      //get candidates running for a given office
+        let candidateList = req.query.id;
+        db.any("SELECT cmte_id, cand_id FROM cmte_contributions WHERE cand_id IN ($1:csv);", [candidateList])
+          .then((data) => {
+            res.status(200)
+              .json({
+                status: req.query.id,
+                data: data,
+                message: 'Retrieved Contributions from Committee'
+              });
+          })
+          .catch((err) => {
+            return next(err);
+          });
+      }
+
+      function generateCandidateLinksByCommittee(req, res, next){
+        let candidateList = req.query.id;
+        db.any("SELECT DISTINCT a.cand_id AS source, b.cand_id AS target, 5 as value FROM cmte_contributions a, cmte_contributions b WHERE a.cand_id IN ($1:csv) AND b.cand_id in ($1:csv) AND a.cmte_id = b.cmte_id AND a.cand_id != b.cand_id ;", [candidateList]) //ND a.cmte_id = b.cmte_id
+          .then((data) => {
+            res.status(200)
+              .json({
+                status: req.query.id,
+                data: data,
+                message: 'Retrieved Contributions from Committee'
+              });
+          })
+          .catch((err) => {
+            return next(err);
+          });
+      }
+
+//        db.any("SELECT cmte_id, cand_id FROM cmte_contributions WHERE cand_id IN (${candidateList});", {candidateList: candidateList})
+
+
 //Export the queries
 module.exports = {
   getAllCandidates: getAllCandidates,
@@ -136,6 +172,8 @@ module.exports = {
   getCandidatesByOffice: getCandidatesByOffice,
   getCandidateByField: getCandidateByField,
   getContributionsByCandidate: getContributionsByCandidate,
+  getContributionsByCanddiateList: getContributionsByCandidateList,
   getContributionsByCommittee: getContributionsByCommittee,
-  getCommittee: getCommittee
+  getCommittee: getCommittee,
+  getCandCmtelinks: generateCandidateLinksByCommittee
 };

@@ -10,6 +10,17 @@ services:
   #    - governetwork
   #  depends_on:
   #    - "backend"
+  graphs:
+    build: ./graphs/.
+    ports: 
+      - 8080:80
+    environment:
+      - PORT=${APIPORT}
+      - URL=${APIURI}
+    networks:
+      - governetwork
+    depends_on:
+      - "backend"
   graphql:
     build: ./graphql/.
     ports: 
@@ -30,7 +41,7 @@ services:
       - PGHOST=${DATABASEHOST}
       - PGPASSWORD=${DATABASEPASSWORD}
       - PGDATABASE=${DATABASE}
-      - PGPORT=${PORT}
+      - PGPORT=${PGPORT}
     networks:
       - governetwork
     depends_on:

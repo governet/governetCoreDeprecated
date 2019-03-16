@@ -5,28 +5,15 @@ import './App.css';
 let profile = (candidate) => {
     return(
     <div className="App">
-        <div className="Candidate_Profile">
-            <h2> {candidate.cand_name} </h2>
-            <h3>{candidate.cand_pty_affiliation}</h3>
-            <h3>
-                {candidate.cand_st1} 
-                {candidate.cand_st2} 
-                {candidate.cand_city}  
-                {candidate.cand_st} 
-                {candidate.cand_zip} 
-            </h3>
-            <div>
-                {candidate.cand_election_yr}
-            </div>
-            <div>
-                Federal Election Commision Candidate ID: {candidate.cand_id} 
-            </div>
-            <div>
-                Office: {candidate.cand_office} 
-            </div>
-            <div>
-                Status: {candidate.cand_status} 
-            </div>
+        <div>
+            <h2> Candidate Overview </h2>
+            Name: {candidate.cand_name}
+            Party: {candidate.cand_pty_affiliation}
+            ID: {candidate.cand_id}
+            Election Year: {candidate.cand_election_yr}
+            Office: {candidate.cand_office}
+            Address: {candidate.cand_st1} {candidate.cand_st2} {candidate.cand_city} {candidate.cand_st} {candidate.cand_zip}
+            Status: {candidate.cand_status}
         </div>
     </div>
     )
@@ -36,13 +23,11 @@ class CandidateProfile extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            candidate_id: props.candidate_id
-        };
+        this.state = {};
 
     }
     componentDidMount() {
-        window.fetch('http://127.0.0.1:3000/api/candidates/'+this.state.candidate_id).then((response) => {
+        window.fetch('http://127.0.0.1:3000/api/candidates/H0AL02087').then((response) => {
 
         return response.json()
       }).then((json) => {
@@ -70,6 +55,4 @@ class CandidateProfile extends Component {
       }
     }
 
-export { 
-    CandidateProfile 
-};
+export default CandidateProfile;

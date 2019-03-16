@@ -38,7 +38,7 @@ class ContributionTimeline extends Component {
         super(props);
         this.state = {
             candidate_id: props.candidate_id,
-            contributionMinimum: 5000,
+            contributionMinimum: 1000,
             contributionMaximum: 1000000000,
             api_uri: props.api_uri,
             svgWidth: 960,
