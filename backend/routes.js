@@ -15,4 +15,10 @@ router.get('/api/candidates/select/:queryField/:queryValue', db.getCandidateByFi
 router.get('/api/committees/:id', db.getCommittee);
 router.get('/api/committees/:id/contributions', db.getContributionsByCommittee);
 
+//Contribution Routes
+router.get('/api/contributions/bulk', db.getContributionsByCanddiateList)
+
+//Graph routes
+router.get('/api/graph/candidates', db.getCandCmtelinks)
+
 module.exports = router;

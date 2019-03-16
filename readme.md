@@ -58,3 +58,12 @@ At startup reads the configuration file from the loader directory, and fetchs + 
 
 #### Author
 Dan Budris
+
+
+### TO DO and FEATURES
+Feature: jaccard index for candidate similarity based on contributions
+Feature: jaccard index for committes with similarity based on candidates they've contributed to
+Feature: contribution co-occurence heat-map
+Feature: contribution map for candidate -- use coloration or node size to indicate the co-occurance of individual donors
+Feature: candidate map for contributions -- use coloration or node size to indidicate the co-occurance of candidates a donor or PAC has contirbutied to in a given area
+Feature: candidate contribution timeline

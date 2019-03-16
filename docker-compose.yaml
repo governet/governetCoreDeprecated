@@ -1,11 +1,22 @@
 version: '3'
 services:
-  frontend:
-    build: ./frontend/.
-    ports:
-      - 5001:80
+  #frontend:
+  #  build: ./frontend/.
+  #  ports:
+  #    - 5001:80
+  #  environment:
+  #      - NODE-ENV=production
+  #  networks:
+  #    - governetwork
+  #  depends_on:
+  #    - "backend"
+  graphs:
+    build: ./graphs/.
+    ports: 
+      - 8080:80
     environment:
-        - NODE-ENV=production
+      - PORT=${APIPORT}
+      - URL=${APIURI}
     networks:
       - governetwork
     depends_on:
@@ -26,10 +37,10 @@ services:
     ports:
       - 3000:3000
     environment:
-      - PGUSER=${PGUSER}
-      - PGHOST=${PGHOST}
-      - PGPASSWORD=${PGPASSWORD}
-      - PGDATABASE=${PGDATABASE}
+      - PGUSER=${DATABASEUSER}
+      - PGHOST=${DATABASEHOST}
+      - PGPASSWORD=${DATABASEPASSWORD}
+      - PGDATABASE=${DATABASE}
       - PGPORT=${PGPORT}
     networks:
       - governetwork
@@ -41,7 +52,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_PASSWORD=${PGPASSWORD}
+      - POSTGRES_PASSWORD=${DATABASEPASSWORD}
     networks:
       - governetwork
   loader:
@@ -49,7 +60,10 @@ services:
     ports:
       - 3001:5000
     environment:
-      - POSTGRES_PASSWORD=${PGPASSWORD}
+      - DATABSEPASSWORD=${DATABASEPASSWORD}
+      - DATABASEHOST=${DATABASEHOST}
+      - DATABASEUSER=${DATABASEUSER}
+      - DATABASE=${DATABASE}
     networks:
       - governetwork
     depends_on:

@@ -30,7 +30,8 @@ if __name__ == "__main__":
 
     # load the data from the FEC
     logging.info("Fetching data from FEC...")
-    dataFetcher = loader.dataFetcher(config)
+    dataFetcherConfiguration = loader.loaderConfiguration(config)
+    dataFetcher = loader.dataFetcher(dataFetcherConfiguration)
     dataFetcher.fetchData()
     dataLoadTimestamp = datetime.datetime.now()
     logging.info("Fetched data from FEC...")

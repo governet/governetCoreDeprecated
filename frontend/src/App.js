@@ -10,7 +10,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-
     }
     componentDidMount() {
         window.fetch('http://127.0.0.1:3000/api/candidates').then((response) => {
